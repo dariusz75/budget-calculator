@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import "./budget-form.css";
 
 const initialValues = {
+  id: "",
   transactionType: "",
   transactionName: "",
   amount: "",

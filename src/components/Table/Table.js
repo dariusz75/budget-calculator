@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Table extends Component {
   render() {
-    const { items, tableName, totalAmount } = this.props;
+    const { items, tableName, totalAmount, removeItem } = this.props;
     const style = {
       marginBottom: 15,
       padding: 15,
@@ -34,14 +35,18 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            {items.map((item, index) => {
+            {items.map((item) => {
               return (
-                <tr key={`item_${index}`}>
+                <tr key={item.id}>
                   <td>{item.transactionName}</td>
                   <td>{item.category}</td>
                   <td>{item.amount}</td>
                   <td>
-                    <FontAwesomeIcon icon="trash" />
+                    <FontAwesomeIcon
+                      id={item.id}
+                      icon="trash"
+                      onClick={() => removeItem(item.id)}
+                    />
                   </td>
                 </tr>
               );

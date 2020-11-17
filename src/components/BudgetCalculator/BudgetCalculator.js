@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import uuid from "react-uuid";
 
 import "./budget-calculator.css";
 import { Display, Table, BudgetForm } from "../../components";
@@ -13,14 +14,20 @@ class BudgetCalculator extends Component {
     totalBudget: 0
   };
 
-  addItem = (data) => {
+  handleAddItem = (data) => {
     console.log("addItem value is:", data);
     const { transactionType, transactionName, amount, category } = data;
     //const newItem = { transactionType, transactionName, amount, category };
     let newIncomeItem;
     let newExpenseItem;
     if (transactionType === "income") {
-      newIncomeItem = { transactionType, transactionName, amount, category };
+      newIncomeItem = {
+        id: uuid(),
+        transactionType,
+        transactionName,
+        amount,
+        category
+      };
       this.setState({
         incomeItems: [...this.state.incomeItems, newIncomeItem],
         totalIncome: this.state.totalIncome + amount
@@ -28,7 +35,13 @@ class BudgetCalculator extends Component {
     }
 
     if (transactionType === "expense") {
-      newExpenseItem = { transactionType, transactionName, amount, category };
+      newExpenseItem = {
+        id: uuid(),
+        transactionType,
+        transactionName,
+        amount,
+        category
+      };
       this.setState({
         expenseItems: [...this.state.expenseItems, newExpenseItem],
         totalExpense: this.state.totalExpense + amount
@@ -37,6 +50,26 @@ class BudgetCalculator extends Component {
     this.setState({
       totalBudget: this.state.totalIncome - this.state.totalExpense
     });
+  };
+
+  handleRemoveIncomeItem = (id) => {
+    console.log("id is", id);
+    let updatedIncomeItems = [...this.state.incomeItems];
+    const itemToRemove = updatedIncomeItems.findIndex((item) => item.id === id);
+
+    updatedIncomeItems.splice(itemToRemove, 1);
+    this.setState({ incomeItems: updatedIncomeItems });
+  };
+
+  handleRemoveExpenseItem = (id) => {
+    console.log("id is", id);
+    let updatedExpenseItems = [...this.state.expenseItems];
+    const itemToRemove = updatedExpenseItems.findIndex(
+      (item) => item.id === id
+    );
+
+    updatedExpenseItems.splice(itemToRemove, 1);
+    this.setState({ expenseItems: updatedExpenseItems });
   };
 
   render() {
@@ -58,13 +91,15 @@ class BudgetCalculator extends Component {
           tableName="Incomes"
           items={incomeItems}
           totalAmount={totalIncome}
+          removeItem={this.handleRemoveIncomeItem}
         />
         <Table
           tableName="Expenses"
           items={expenseItems}
           totalAmount={totalExpense}
+          removeItem={this.handleRemoveExpenseItem}
         />
-        <BudgetForm addItem={this.addItem} />
+        <BudgetForm addItem={this.handleAddItem} />
       </div>
     );
   }
