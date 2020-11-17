@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Table extends Component {
   render() {
-    const { items, tableName } = this.props;
+    const { items, tableName, totalAmount } = this.props;
     const style = {
       marginBottom: 15,
       padding: 15,
@@ -17,7 +17,13 @@ class Table extends Component {
 
     return (
       <div style={style}>
-        <h5>{tableName}</h5>
+        <h5>
+          {tableName}
+          <span className="badge badge-primary float-right">
+            Total: £{totalAmount}
+          </span>
+        </h5>
+
         <table className="table">
           <thead>
             <tr>
