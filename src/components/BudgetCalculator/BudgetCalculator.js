@@ -79,7 +79,6 @@ class BudgetCalculator extends Component {
   };
 
   componentDidMount() {
-    console.log("mounted!!!");
     if (localStorage.getItem("lastState")) {
       const lastState = JSON.parse(localStorage.getItem("lastState"));
       this.setState(lastState);
@@ -91,7 +90,6 @@ class BudgetCalculator extends Component {
   }
 
   render() {
-    console.log("rerenderd");
     const {
       incomeItems,
       expenseItems,
@@ -99,10 +97,7 @@ class BudgetCalculator extends Component {
       totalExpense,
       totalBudget
     } = this.state;
-    console.log("state is", this.state);
-    //console.log("state.incomeItems is:", incomeItems);
-    //console.log("state.expanceItems is:", expenseItems);
-    //console.log("state.totalBudget is:", totalBudget);
+
     return (
       <div className="main-wrapper">
         <Display totalBudget={totalBudget} />

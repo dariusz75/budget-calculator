@@ -32,7 +32,7 @@ const categories = [
 
 const BudgetForm = ({ addItem }) => {
   const onSubmit = (values, onSubmitProps) => {
-    console.log("Submited values are:", values);
+    //console.log("Submited values are:", values);
     //console.log("onSubmitProps are", onSubmitProps);
     addItem(values);
     onSubmitProps.resetForm();
