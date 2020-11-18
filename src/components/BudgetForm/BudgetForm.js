@@ -86,6 +86,7 @@ const BudgetForm = ({ addItem }) => {
               id="amount"
               name="amount"
               min="0"
+              step=".25"
             />
             <div className="error-message">
               <ErrorMessage name="amount" />

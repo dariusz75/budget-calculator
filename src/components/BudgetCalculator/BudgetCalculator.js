@@ -56,10 +56,11 @@ class BudgetCalculator extends Component {
     const amountToRemove = updatedIncomeItems[itemToRemove].amount;
 
     updatedIncomeItems.splice(itemToRemove, 1);
-    this.setState({
+    this.setState((prevState) => ({
       incomeItems: updatedIncomeItems,
-      totalIncome: this.state.totalIncome - amountToRemove
-    });
+      totalIncome: prevState.totalIncome - amountToRemove,
+      totalBudget: prevState.totalBudget - amountToRemove
+    }));
   };
 
   handleRemoveExpenseItem = (id) => {
@@ -70,13 +71,27 @@ class BudgetCalculator extends Component {
     const amountToRemove = updatedExpenseItems[itemToRemove].amount;
 
     updatedExpenseItems.splice(itemToRemove, 1);
-    this.setState({
+    this.setState((prevState) => ({
       expenseItems: updatedExpenseItems,
-      totalExpense: this.state.totalExpense - amountToRemove
-    });
+      totalExpense: prevState.totalExpense - amountToRemove,
+      totalBudget: prevState.totalBudget + amountToRemove
+    }));
   };
 
+  componentDidMount() {
+    console.log("mounted!!!");
+    if (localStorage.getItem("lastState")) {
+      const lastState = JSON.parse(localStorage.getItem("lastState"));
+      this.setState(lastState);
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem("lastState", JSON.stringify(this.state));
+  }
+
   render() {
+    console.log("rerenderd");
     const {
       incomeItems,
       expenseItems,
