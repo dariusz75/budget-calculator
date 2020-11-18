@@ -13,7 +13,7 @@ const Display = ({ totalBudget }) => {
             totalBudget > 0 ? "badge badge-primary" : "badge badge-danger"
           }
         >
-          £{totalBudget}
+          £{totalBudget.toFixed(2)}
         </span>
       </h6>
     </div>

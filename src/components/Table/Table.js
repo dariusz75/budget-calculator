@@ -21,7 +21,7 @@ class Table extends Component {
         <h5>
           {tableName}
           <span className="badge badge-primary float-right">
-            Total: £{totalAmount}
+            Total: £{totalAmount.toFixed(2)}
           </span>
         </h5>
 
