@@ -6,7 +6,6 @@ import { Display, Table, BudgetForm } from "../../components";
 
 class BudgetCalculator extends Component {
   state = {
-    //items: [],
     incomeItems: [],
     expenseItems: [],
     totalIncome: 0,
@@ -15,9 +14,8 @@ class BudgetCalculator extends Component {
   };
 
   handleAddItem = (data) => {
-    console.log("addItem value is:", data);
+    //console.log("addItem value is:", data);
     const { transactionType, transactionName, amount, category } = data;
-    //const newItem = { transactionType, transactionName, amount, category };
     let newIncomeItem;
     let newExpenseItem;
     if (transactionType === "income") {
@@ -53,23 +51,29 @@ class BudgetCalculator extends Component {
   };
 
   handleRemoveIncomeItem = (id) => {
-    console.log("id is", id);
     let updatedIncomeItems = [...this.state.incomeItems];
     const itemToRemove = updatedIncomeItems.findIndex((item) => item.id === id);
+    const amountToRemove = updatedIncomeItems[itemToRemove].amount;
 
     updatedIncomeItems.splice(itemToRemove, 1);
-    this.setState({ incomeItems: updatedIncomeItems });
+    this.setState({
+      incomeItems: updatedIncomeItems,
+      totalIncome: this.state.totalIncome - amountToRemove
+    });
   };
 
   handleRemoveExpenseItem = (id) => {
-    console.log("id is", id);
     let updatedExpenseItems = [...this.state.expenseItems];
     const itemToRemove = updatedExpenseItems.findIndex(
       (item) => item.id === id
     );
+    const amountToRemove = updatedExpenseItems[itemToRemove].amount;
 
     updatedExpenseItems.splice(itemToRemove, 1);
-    this.setState({ expenseItems: updatedExpenseItems });
+    this.setState({
+      expenseItems: updatedExpenseItems,
+      totalExpense: this.state.totalExpense - amountToRemove
+    });
   };
 
   render() {
@@ -80,10 +84,10 @@ class BudgetCalculator extends Component {
       totalExpense,
       totalBudget
     } = this.state;
-    //console.log("state.items is:", items);
-    console.log("state.incomeItems is:", incomeItems);
-    console.log("state.expanceItems is:", expenseItems);
-    console.log("state.totalBudget is:", totalBudget);
+    console.log("state is", this.state);
+    //console.log("state.incomeItems is:", incomeItems);
+    //console.log("state.expanceItems is:", expenseItems);
+    //console.log("state.totalBudget is:", totalBudget);
     return (
       <div className="main-wrapper">
         <Display totalBudget={totalBudget} />
